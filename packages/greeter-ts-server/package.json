@@ -1,0 +1,21 @@
+{
+  "name": "@example/greeter-ts-server",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "serve": "pnpm run build && pnpm run start"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.14.3",
+    "@grpc/proto-loader": "^0.8.0",
+    "get-port": "catalog:",
+    "@my-org/example-proto": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "typescript": "^5.9.3"
+  }
+}

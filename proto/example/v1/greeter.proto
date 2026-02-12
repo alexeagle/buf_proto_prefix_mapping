@@ -5,8 +5,6 @@ package example.v1;
 import "pet/v1/pet.proto";
 import "validate/validate.proto";
 
-option go_package = "github.com/alexeagle/repros/buf_proto_prefix_mapping/proto/example/v1;examplev1";
-
 service GreeterService {
   rpc GetGreeting(GetGreetingRequest) returns (GetGreetingResponse);
 }

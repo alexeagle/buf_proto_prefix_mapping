@@ -5,6 +5,6 @@
     "yo": "~5.1.0"
   },
   "dependencies": {
-    "@bufbuild/protoc-gen-es": "catalog:"
+    "@bufbuild/protoc-gen-es": "^2.11.0"
   }
 }

@@ -1,6 +1,8 @@
 packages:
   - packages/*
+  - proto/*
   - tools
 
 catalog:
   '@bufbuild/protobuf': ^2.11.0
+  get-port: ^7.1.0
