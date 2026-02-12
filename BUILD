@@ -1,5 +1,3 @@
-"""Targets in the repository root"""
-
 load("@aspect_rules_js//js:defs.bzl", "js_library")
 load("@gazelle//:def.bzl", "gazelle")
 load("@npm//:defs.bzl", "npm_link_all_packages")
@@ -25,12 +23,6 @@ js_library(
     deps = [],
 )
 
-exports_files(
-    [
-    ],
-    visibility = ["//:__subpackages__"],
-)
-
 # It's faster to avoid type-checking in a devserver when using monorepo packages.
 # If you commonly ship your npm packages outside the repo, change this to "npm_package"
 # gazelle:js_package_rule_kind js_library
@@ -40,7 +32,9 @@ exports_files(
 # gazelle:exclude githooks/*
 # Workaround https://github.com/bazel-contrib/bazel-gazelle/issues/2001
 # gazelle:map_kind proto_library proto_library @protobuf//bazel:proto_library.bzl
-
+# Seems like a bug in the buf gazelle extension.
+# It wants to write @buf_deps//pet/v1:v1_proto
+# gazelle:resolve proto pet/v1/pet.proto @buf_deps//pet/v1:pet_v1_proto
 gazelle(
     name = "gazelle",
     env = {
@@ -54,13 +48,15 @@ gazelle(
     gazelle = "@multitool//tools/gazelle",
 )
 
-gazelle(
-    name = "buf-update-repos",
-    args = [
-        "--from_file=buf.lock",
-        "-to_macro=buf_deps.bzl%buf_deps",
-        "-prune",
-    ],
-    command = "update-repos",
-    gazelle = "@multitool//tools/gazelle",
-)
+# FIXME: can we get this to work?
+# Then the MODULE.bazel would not have to repeat the buf dependencies.
+# gazelle(
+#     name = "buf-update-repos",
+#     args = [
+#         "--from_file=buf.lock",
+#         "-to_macro=buf_deps.bzl%buf_deps",
+#         "-prune",
+#     ],
+#     command = "update-repos",
+#     gazelle = "@multitool//tools/gazelle",
+# )
