@@ -38,14 +38,29 @@ exports_files(
 # We prefer BUILD instead of BUILD.bazel
 # gazelle:build_file_name BUILD
 # gazelle:exclude githooks/*
+# Workaround https://github.com/bazel-contrib/bazel-gazelle/issues/2001
+# gazelle:map_kind proto_library proto_library @protobuf//bazel:proto_library.bzl
 
 gazelle(
     name = "gazelle",
     env = {
         "ENABLE_LANGUAGES": ",".join([
+            "buf",
             "starlark",
             "js",
+            "proto",
         ]),
     },
+    gazelle = "@multitool//tools/gazelle",
+)
+
+gazelle(
+    name = "buf-update-repos",
+    args = [
+        "--from_file=buf.lock",
+        "-to_macro=buf_deps.bzl%buf_deps",
+        "-prune",
+    ],
+    command = "update-repos",
     gazelle = "@multitool//tools/gazelle",
 )

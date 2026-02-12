@@ -9,6 +9,34 @@ bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "rules_multitool", version = "1.11.1")
 bazel_dep(name = "bazel_env.bzl", version = "0.5.0")
 bazel_dep(name = "bazelrc-preset.bzl", version = "1.8.0")
+bazel_dep(name = "rules_buf", version = "0.5.2")
+
+git_override(
+    module_name = "aspect_rules_js",
+    commit = "5b57cda778166f20cf328fc4de5b4ddf724b381b",
+    remote = "https://github.com/aspect-build/rules_js.git",
+)
+
+#########################
+# Protobuf and gRPC
+bazel_dep(name = "protobuf", version = "33.4")
+bazel_dep(name = "protovalidate", version = "1.0.0")
+
+# Force later resolutions of some transitives to pick up Bazel 9 fixes
+bazel_dep(name = "rules_foreign_cc", version = "0.15.1", repo_name = None)
+
+buf = use_extension("@rules_buf//buf:extensions.bzl", "buf")
+buf.toolchains(version = "v1.65.0")
+
+# See https://buf.build/docs/build-systems/bazel#buf-dependencies
+# NB: it's gross that we repeat these here, the buf lock file should be used instead
+buf.dependency(module = "buf.build/envoyproxy/protoc-gen-validate:eac44469a7af47e7839a7f1f3d7ac004")
+buf.dependency(module = "buf.build/acme/petapis:7abdb7802c8f4737a1a23a35ca8266ef")
+buf.dependency(module = "buf.build/acme/paymentapis:9a877cf260e1488d869a31fce3bea26d")
+buf.dependency(module = "buf.build/googleapis/googleapis:004180b77378443887d3b55cabc00384")
+
+# Allow references to labels under @buf_deps and @rules_buf_toolchains//:buf
+use_repo(buf, "buf_deps", "rules_buf_toolchains")
 
 # We have to take a dependency on rules_python in order to set bootstrap=script
 # for transitive dependencies, even if there are no Python rules used in this repo.

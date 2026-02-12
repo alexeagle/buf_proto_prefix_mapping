@@ -1,0 +1,16 @@
+version: v2
+
+modules:
+  - path: proto
+
+deps:
+  - buf.build/envoyproxy/protoc-gen-validate:eac44469a7af47e7839a7f1f3d7ac004
+  - buf.build/acme/petapis:7abdb7802c8f4737a1a23a35ca8266ef
+
+lint:
+  use:
+    - STANDARD
+
+breaking:
+  use:
+    - FILE

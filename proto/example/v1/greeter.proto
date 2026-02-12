@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package example.v1;
+
+import "pet/v1/pet.proto";
+import "validate/validate.proto";
+
+option go_package = "github.com/alexeagle/repros/buf_proto_prefix_mapping/proto/example/v1;examplev1";
+
+service GreeterService {
+  rpc GetGreeting(GetGreetingRequest) returns (GetGreetingResponse);
+}
+
+message GetGreetingRequest {
+  string name = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message GetGreetingResponse {
+  string message = 1;
+  pet.v1.Pet featured_pet = 2;
+}

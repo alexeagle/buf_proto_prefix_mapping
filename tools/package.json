@@ -3,5 +3,8 @@
   "private": "true",
   "devDependencies": {
     "yo": "~5.1.0"
+  },
+  "dependencies": {
+    "@bufbuild/protoc-gen-es": "catalog:"
   }
 }

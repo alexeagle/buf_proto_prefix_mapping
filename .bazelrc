@@ -6,7 +6,7 @@ try-import %workspace%/tools/java17.bazelrc
 # Disable skymeld; see https://github.com/bazelbuild/bazel/issues/23743
 # fixes src/main/tools/process-wrapper-legacy.cc:80: "execvp(external/++toolchains+coreutils_linux_amd64/coreutils, ...)": No such file or directory
 common --noexperimental_merged_skyframe_analysis_execution
-
+common --@protobuf//bazel/toolchains:prefer_prebuilt_protoc
 # also see: https://blog.aspect.build/configuring-bazels-downloader
 common --downloader_config=tools/downloader.cfg
 # for speed, passes an argument `--skipLibCheck` to *every* spawn of tsc
