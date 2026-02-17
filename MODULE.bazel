@@ -11,14 +11,10 @@ bazel_dep(name = "bazel_env.bzl", version = "0.5.0")
 bazel_dep(name = "bazelrc-preset.bzl", version = "1.8.0")
 bazel_dep(name = "rules_buf", version = "0.5.2")
 
-# git_override(
-#     module_name = "aspect_rules_js",
-#     commit = "5b57cda778166f20cf328fc4de5b4ddf724b381b",
-#     remote = "https://github.com/aspect-build/rules_js.git",
-# )
-local_path_override(
+git_override(
     module_name = "aspect_rules_js",
-    path = "../../Projects/rules_js",
+    commit = "a413051cac3072a8eb72ce074fa80c1b82a9d41b",
+    remote = "https://github.com/aspect-build/rules_js.git",
 )
 
 #########################
